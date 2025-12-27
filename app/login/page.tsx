@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import { admin } from "@/services/api";
 import { Lock } from "lucide-react";
 
-export default function EM AdminLoginPage() {
+export default function EMAdminLoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,23 +23,12 @@ export default function EM AdminLoginPage() {
     const password = formData.get("password");
 
     try {
-      console.log("Attempting login with:", { email, password: "***" });
-      console.log("API URL:", process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000");
-      
       const data = await admin.login({ email, password });
-      
-      console.log("Login successful, token:", data.access_token.substring(0, 20) + "...");
+
       localStorage.setItem("admin_token", data.access_token);
       router.push("/dashboard");
     } catch (err: any) {
-      console.error("=== Login Error Details ===");
-      console.error("Full error:", err);
-      console.error("Error message:", err.message);
-      console.error("Error response:", err.response);
-      console.error("Error response data:", err.response?.data);
-      console.error("Error response status:", err.response?.status);
-      console.error("Is axios error?:", err.isAxiosError);
-      console.error("Error config:", err.config);
+      console.error("Admin login failed");
       
       if (err.code === 'ERR_NETWORK') {
         setError("No se puede conectar con el servidor API");

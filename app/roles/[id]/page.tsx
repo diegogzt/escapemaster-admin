@@ -183,7 +183,7 @@ export default function RolePermissionsPage() {
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {perms.map((permission) => {
+                {(perms as any[]).map((permission) => {
                   const hasPermission = rolePermissions.has(permission.id);
                   const isAdmin = role?.name === "Admin";
                   
