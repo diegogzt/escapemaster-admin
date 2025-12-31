@@ -149,49 +149,64 @@ export default function CreateUserInOrgPage() {
         <h1 className="text-3xl font-bold text-[#1F6357] mb-2">Añadir Usuario</h1>
         <p className="text-gray-700 mb-8">Crea un nuevo usuario en {org.name}</p>
 
-        <Card className="max-w-2xl">
+        <Card className="max-w-2xl shadow-xl border-t-4 border-t-[#1F6357]">
           <form onSubmit={handleSubmit}>
-            <div className="p-6 space-y-4">
-              <Input
-                name="email"
-                label="Email"
-                type="email"
-                placeholder="usuario@ejemplo.com"
-                required
-              />
-              <Input
-                name="password"
-                label="Contraseña"
-                type="password"
-                placeholder="••••••••"
-                required
-              />
-              <Input
-                name="full_name"
-                label="Nombre (opcional)"
-                type="text"
-                placeholder="Nombre del usuario"
-              />
-              
-              <div className="mb-6">
-                <label className="block mb-2 font-semibold text-gray-800">Rol (opcional)</label>
-                <select
-                  name="role_id"
-                  className="w-full px-3 py-2 border-2 border-beige rounded-lg text-base transition-colors bg-white text-gray-900 focus:border-primary"
-                >
-                  <option value="">Sin rol asignado</option>
-                  {roles.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.name}
-                    </option>
-                  ))}
-                </select>
+            <div className="p-8 space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                <div className="md:col-span-2">
+                  <Input
+                    name="email"
+                    label="Email"
+                    type="email"
+                    placeholder="usuario@ejemplo.com"
+                    required
+                  />
+                </div>
+                
+                <Input
+                  name="password"
+                  label="Contraseña"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                />
+                
+                <Input
+                  name="full_name"
+                  label="Nombre Completo"
+                  type="text"
+                  placeholder="Nombre del usuario"
+                  required
+                />
+                
+                <div className="md:col-span-2 mt-2">
+                  <label htmlFor="role_id" className="block mb-2 font-semibold text-gray-800">Rol (opcional)</label>
+                  <select
+                    id="role_id"
+                    name="role_id"
+                    className="w-full px-3 py-2 border-2 border-beige rounded-lg text-base transition-colors bg-white text-gray-900 focus:border-primary outline-none"
+                  >
+                    <option value="">Sin rol asignado</option>
+                    {roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-xs text-gray-500 mt-2">
+                    El rol determina los permisos que tendrá el usuario en la organización.
+                  </p>
+                </div>
               </div>
             </div>
 
-            {error && <p className="text-red-500 text-sm text-center px-6">{error}</p>}
+            {error && (
+              <div className="mx-8 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-600 text-sm text-center">{error}</p>
+              </div>
+            )}
 
-            <CardFooter className="px-6 pb-6 pt-4 flex gap-4">
+            <CardFooter className="px-8 pb-8 pt-6 flex flex-col sm:flex-row gap-4">
               <Link href={`/organizations/${params.id}`} className="flex-1">
                 <Button type="button" className="w-full bg-gray-500 hover:bg-gray-600">
                   Cancelar
