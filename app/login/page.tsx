@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/Card";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import { admin } from "@/services/api";
+import { admin, API_URL } from "@/services/api";
 import { Lock } from "lucide-react";
 
 export default function EMAdminLoginPage() {
@@ -28,10 +28,10 @@ export default function EMAdminLoginPage() {
       localStorage.setItem("admin_token", data.access_token);
       router.push("/dashboard");
     } catch (err: any) {
-      console.error("Admin login failed");
+      console.error("Admin login failed", err);
       
       if (err.code === 'ERR_NETWORK') {
-        setError("No se puede conectar con el servidor API");
+        setError(`No se puede conectar con el servidor API (${API_URL}). CORS o Error de Red.`);
       } else if (err.response?.status === 401) {
         setError("Credenciales de administrador inválidas");
       } else {
@@ -83,6 +83,9 @@ export default function EMAdminLoginPage() {
             </Button>
           </CardFooter>
         </form>
+        <div className="text-xs text-gray-400 text-center pb-4">
+            API: {API_URL}
+        </div>
       </Card>
     </div>
   );

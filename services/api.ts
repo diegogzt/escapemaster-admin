@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.escapemaster.es";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.escapemaster.es";
+console.log("🚀 ~ API_URL configured as:", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,

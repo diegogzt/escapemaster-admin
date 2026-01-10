@@ -70,15 +70,17 @@ export default function CreateUserInOrgPage() {
       router.push(`/organizations/${params.id}`);
     } catch (err: any) {
       console.error("Error creating user:", err);
-      
+
       // Handle validation errors from FastAPI
       if (err.response?.data?.detail) {
         const detail = err.response.data.detail;
         if (Array.isArray(detail)) {
           // Pydantic validation errors
-          const errorMessages = detail.map((e: any) => `${e.loc.join('.')}: ${e.msg}`).join(', ');
+          const errorMessages = detail
+            .map((e: any) => `${e.loc.join(".")}: ${e.msg}`)
+            .join(", ");
           setError(errorMessages);
-        } else if (typeof detail === 'string') {
+        } else if (typeof detail === "string") {
           setError(detail);
         } else {
           setError("Error al crear usuario");
@@ -115,13 +117,25 @@ export default function CreateUserInOrgPage() {
 
         <nav className="flex-1 p-4 space-y-2">
           <Link href="/dashboard">
-            <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${pathname === "/dashboard" ? "bg-[#2A7A6B]" : "hover:bg-[#2A7A6B]/50"}`}>
+            <div
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                pathname === "/dashboard"
+                  ? "bg-[#2A7A6B]"
+                  : "hover:bg-[#2A7A6B]/50"
+              }`}
+            >
               <LayoutDashboard size={20} />
               <span>Dashboard</span>
             </div>
           </Link>
           <Link href="/organizations">
-            <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${pathname.includes("/organizations") ? "bg-[#2A7A6B]" : "hover:bg-[#2A7A6B]/50"}`}>
+            <div
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                pathname.includes("/organizations")
+                  ? "bg-[#2A7A6B]"
+                  : "hover:bg-[#2A7A6B]/50"
+              }`}
+            >
               <Building2 size={20} />
               <span>Organizaciones</span>
             </div>
@@ -129,7 +143,7 @@ export default function CreateUserInOrgPage() {
         </nav>
 
         <div className="p-4 border-t border-[#2A7A6B]">
-          <button 
+          <button
             onClick={handleLogout}
             className="flex items-center space-x-3 px-4 py-3 w-full rounded-lg hover:bg-[#2A7A6B]/50 text-red-200 hover:text-red-100 transition-colors"
           >
@@ -141,13 +155,20 @@ export default function CreateUserInOrgPage() {
 
       {/* Main Content */}
       <main className="flex-1 ml-64 p-8">
-        <Link href={`/organizations/${params.id}`} className="inline-flex items-center text-[#1F6357] hover:text-[#164a41] mb-6">
+        <Link
+          href={`/organizations/${params.id}`}
+          className="inline-flex items-center text-[#1F6357] hover:text-[#164a41] mb-6"
+        >
           <ArrowLeft size={20} className="mr-2" />
           Volver a {org.name}
         </Link>
 
-        <h1 className="text-3xl font-bold text-[#1F6357] mb-2">Añadir Usuario</h1>
-        <p className="text-gray-700 mb-8">Crea un nuevo usuario en {org.name}</p>
+        <h1 className="text-3xl font-bold text-[#1F6357] mb-2">
+          Añadir Usuario
+        </h1>
+        <p className="text-gray-700 mb-8">
+          Crea un nuevo usuario en {org.name}
+        </p>
 
         <Card className="max-w-2xl shadow-xl border-t-4 border-t-[#1F6357]">
           <form onSubmit={handleSubmit}>
@@ -162,7 +183,7 @@ export default function CreateUserInOrgPage() {
                     required
                   />
                 </div>
-                
+
                 <Input
                   name="password"
                   label="Contraseña"
@@ -170,7 +191,7 @@ export default function CreateUserInOrgPage() {
                   placeholder="••••••••"
                   required
                 />
-                
+
                 <Input
                   name="full_name"
                   label="Nombre Completo"
@@ -178,9 +199,14 @@ export default function CreateUserInOrgPage() {
                   placeholder="Nombre del usuario"
                   required
                 />
-                
+
                 <div className="md:col-span-2 mt-2">
-                  <label htmlFor="role_id" className="block mb-2 font-semibold text-gray-800">Rol (opcional)</label>
+                  <label
+                    htmlFor="role_id"
+                    className="block mb-2 font-semibold text-gray-800"
+                  >
+                    Rol (opcional)
+                  </label>
                   <select
                     id="role_id"
                     name="role_id"
@@ -194,7 +220,8 @@ export default function CreateUserInOrgPage() {
                     ))}
                   </select>
                   <p className="text-xs text-gray-500 mt-2">
-                    El rol determina los permisos que tendrá el usuario en la organización.
+                    El rol determina los permisos que tendrá el usuario en la
+                    organización.
                   </p>
                 </div>
               </div>
@@ -208,11 +235,18 @@ export default function CreateUserInOrgPage() {
 
             <CardFooter className="px-8 pb-8 pt-6 flex flex-col sm:flex-row gap-4">
               <Link href={`/organizations/${params.id}`} className="flex-1">
-                <Button type="button" className="w-full bg-gray-500 hover:bg-gray-600">
+                <Button
+                  type="button"
+                  className="w-full bg-gray-500 hover:bg-gray-600"
+                >
                   Cancelar
                 </Button>
               </Link>
-              <Button type="submit" loading={loading} className="flex-1 bg-[#1F6357] hover:bg-[#164a41]">
+              <Button
+                type="submit"
+                loading={loading}
+                className="flex-1 bg-[#1F6357] hover:bg-[#164a41]"
+              >
                 Crear Usuario
               </Button>
             </CardFooter>
