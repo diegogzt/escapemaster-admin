@@ -8,6 +8,8 @@ import Button from "@/components/Button";
 import { admin } from "@/services/api";
 import Link from "next/link";
 import { LayoutDashboard, Building2, LogOut, ArrowLeft, Users, Shield, Plus } from "lucide-react";
+import axios from "axios";
+import { API_URL } from "@/services/api";
 
 export default function OrgDetailPage() {
   const router = useRouter();
@@ -17,6 +19,7 @@ export default function OrgDetailPage() {
   const [org, setOrg] = useState<any>(null);
   const [users, setUsers] = useState<any[]>([]);
   const [roles, setRoles] = useState<any[]>([]);
+  const [rooms, setRooms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,13 +44,16 @@ export default function OrgDetailPage() {
       const currentOrg = orgsData.find((o: any) => o.id === params.id);
       setOrg(currentOrg);
 
-      const [usersData, rolesData] = await Promise.all([
+      const [usersData, rolesData, roomsData] = await Promise.all([
         admin.getOrgUsers(params.id as string),
         admin.getOrgRoles(params.id as string),
+        // Adding a hypothetical getOrgRooms if it exists or using rooms from org if returned
+        axios.get(`${API_URL}/admin/organizations/${params.id}/rooms`).then(res => res.data).catch(() => [])
       ]);
 
       setUsers(usersData);
       setRoles(rolesData);
+      setRooms(roomsData);
     } catch (error) {
       console.error("Error loading org data:", error);
     } finally {
@@ -144,7 +150,15 @@ export default function OrgDetailPage() {
                 <span className="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-700">
                   {org.subscription_plan}
                 </span>
+                <span className="px-3 py-1 text-sm rounded-full bg-purple-100 text-purple-700">
+                  Gestor: {org.booking_manager === 'er_director' ? 'ER Director' : 'Interno'}
+                </span>
               </div>
+              {org.booking_manager === 'er_director' && org.erd_url && (
+                <p className="text-sm text-gray-500 mt-2 font-mono">
+                  URL ERD: {org.erd_url}
+                </p>
+              )}
             </div>
 
         {/* Users Section */}
@@ -205,6 +219,51 @@ export default function OrgDetailPage() {
                     )}
                   </div>
                   <p className="text-sm text-gray-600">{role.description || "Sin descripción"}</p>
+                </Card>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Rooms Section */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-[#1F6357] flex items-center gap-2 mb-4">
+            <LayoutDashboard size={24} />
+            Salas / Juegos ({rooms.length})
+          </h2>
+
+          <div className="grid grid-cols-1 gap-4 pb-20">
+            {rooms.length === 0 ? (
+              <p className="text-gray-500">No hay salas configuradas en esta organización</p>
+            ) : (
+              rooms.map((room) => (
+                <Card key={room.id} className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-800">{room.name}</h3>
+                      <p className="text-sm text-gray-600">ID: {room.id}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      {org.booking_manager === 'er_director' && (
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-right">ER Director Game ID</label>
+                          <input 
+                            type="text"
+                            defaultValue={room.erd_game_id}
+                            placeholder="Ej: 221"
+                            className="text-right px-2 py-1 border border-gray-200 rounded-md focus:ring-1 ring-[#1F6357] outline-none text-gray-700"
+                            onBlur={async (e) => {
+                                try {
+                                    await axios.put(`${API_URL}/admin/rooms/${room.id}`, { erd_game_id: e.target.value });
+                                } catch (err) {
+                                    console.error("Error updating room erd_game_id:", err);
+                                }
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </Card>
               ))
             )}

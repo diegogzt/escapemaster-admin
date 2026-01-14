@@ -16,6 +16,7 @@ export default function CreateOrgPage() {
   const { setTheme } = useTheme();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [bookingManager, setBookingManager] = useState("internal");
 
   React.useEffect(() => {
     setTheme("tropical");
@@ -36,9 +37,16 @@ export default function CreateOrgPage() {
     const formData = new FormData(e.target as HTMLFormElement);
     const name = formData.get("name");
     const description = formData.get("description");
+    const booking_manager = formData.get("booking_manager");
+    const erd_url = formData.get("erd_url");
 
     try {
-      await admin.createOrganization({ name, description });
+      await admin.createOrganization({ 
+        name, 
+        description,
+        booking_manager,
+        erd_url
+      });
       router.push("/organizations");
     } catch (err: any) {
       console.error("Error creating organization:", err);
@@ -114,6 +122,27 @@ export default function CreateOrgPage() {
                 type="text"
                 placeholder="Descripción de la organización"
               />
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-gray-700">Gestor de Reservas</label>
+                <select 
+                  name="booking_manager"
+                  value={bookingManager}
+                  onChange={(e) => setBookingManager(e.target.value)}
+                  className="w-full h-10 px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1F6357]"
+                >
+                  <option value="internal">Interno (EscapeMaster)</option>
+                  <option value="er_director">ER Director</option>
+                </select>
+              </div>
+              {bookingManager === 'er_director' && (
+                <Input
+                  name="erd_url"
+                  label="URL del sitio web de ER Director"
+                  type="url"
+                  placeholder="https://www.residentriddle.es/"
+                  required
+                />
+              )}
             </div>
 
             {error && <p className="text-red-500 text-sm text-center px-6">{error}</p>}
