@@ -69,6 +69,34 @@ export const admin = {
     const response = await api.delete(`/admin/roles/${roleId}/permissions/${permissionId}`);
     return response.data;
   },
+  // Room Management
+  getRooms: async () => {
+    // Determine endpoint based on API structure. Assuming /admin/rooms or /rooms with admin token
+    // Based on previous context, main API has /rooms. Admin usually creates via /rooms but needs full access.
+    // If backend doesn't have specific /admin/rooms, we use /rooms
+    const response = await api.get("/rooms");
+    return response.data;
+  },
+  getRoom: async (id: string) => {
+    const response = await api.get(`/rooms/${id}`);
+    return response.data;
+  },
+  createRoom: async (data: any) => {
+    const response = await api.post("/rooms", data);
+    return response.data;
+  },
+  updateRoom: async (id: string, data: any) => {
+    const response = await api.put(`/rooms/${id}`, data);
+    return response.data;
+  },
+  uploadRoomImage: async (id: string, file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await api.post(`/rooms/${id}/image`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  },
 };
 
 export default api;
