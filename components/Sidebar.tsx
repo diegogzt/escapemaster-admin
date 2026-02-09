@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Building2, Users, Shield, LogOut, Gamepad2 } from "lucide-react";
+import { LayoutDashboard, Building2, Users, Shield, LogOut, Gamepad2, FileCheck, Wallet } from "lucide-react";
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -56,6 +56,23 @@ export function Sidebar() {
           <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${isActive("/roles") ? "bg-[#2A7A6B]" : "hover:bg-[#2A7A6B]/50"}`}>
             <Shield size={20} />
             <span>Roles</span>
+          </div>
+        </Link>
+
+        <div className="pt-4 mt-4 border-t border-[#2A7A6B]/50">
+          <p className="px-4 text-xs text-white/50 uppercase tracking-wider mb-2">Onboarding B2B</p>
+        </div>
+
+        <Link href="/kyb">
+          <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${isActive("/kyb") ? "bg-[#2A7A6B]" : "hover:bg-[#2A7A6B]/50"}`}>
+            <FileCheck size={20} />
+            <span>Verificación KYB</span>
+          </div>
+        </Link>
+        <Link href="/payouts">
+          <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${isActive("/payouts") ? "bg-[#2A7A6B]" : "hover:bg-[#2A7A6B]/50"}`}>
+            <Wallet size={20} />
+            <span>Pagos</span>
           </div>
         </Link>
       </nav>

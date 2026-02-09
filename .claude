@@ -1,0 +1,28 @@
+# Escapemaster Panel Admin - Contexto para IA
+
+## 📋 Rol y Contexto
+
+Estás trabajando en el Panel de Súper Administración global de la plataforma Escapemaster.
+
+## 🏗️ Propósito
+
+Herramienta interna para los administradores de Escapemaster para gestionar organizaciones (tenants), planes de suscripción, usuarios globales y configuraciones a nivel de plataforma.
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Estilos:** Tailwind CSS v4
+- **Componentes:** Escapemaster UI Kit (en `manager/ui-kit`)
+- **Comunicación:** Axios con interceptores de Auth.
+
+## 📁 Estructura Clave
+
+- `app/`: Vistas de administración (Organizaciones, Usuarios, Subscriptions).
+- `components/`: Listados y modales de edición administrativa.
+- `services/`: Endpoints dedicados de la API `/admin/*`.
+
+## 🎨 Guías y Estándares
+
+- Enfocarse en la claridad de los datos y la eficiencia operativa.
+- Usar tablas y filtros avanzados para gestionar grandes volúmenes de organizaciones.
+- Mantener consistencia visual con el resto del ecosistema usando el UI Kit.

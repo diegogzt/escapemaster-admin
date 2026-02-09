@@ -97,6 +97,30 @@ export const admin = {
     });
     return response.data;
   },
+  
+  // KYB Verification
+  getPendingKYB: async () => {
+    const response = await api.get("/kyb/admin/pending");
+    return response.data;
+  },
+  reviewKYBDocument: async (documentId: string, data: { status: string; rejection_reason?: string }) => {
+    const response = await api.put(`/kyb/admin/documents/${documentId}`, data);
+    return response.data;
+  },
+  getOrganizationKYBStatus: async (orgId: string) => {
+    const response = await api.get(`/kyb/admin/organizations/${orgId}/status`);
+    return response.data;
+  },
+  
+  // Payouts
+  getPendingPayouts: async () => {
+    const response = await api.get("/payouts/admin/pending");
+    return response.data;
+  },
+  processPayouts: async () => {
+    const response = await api.post("/payouts/admin/process");
+    return response.data;
+  },
 };
 
 export default api;

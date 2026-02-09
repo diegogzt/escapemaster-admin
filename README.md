@@ -1,4 +1,4 @@
-# 🛡️ Escapemaster Admin
+# 🛡️ Escapemaster Panel Admin
 
 > The Super Admin Control Plane for the Escapemaster Ecosystem.
 
@@ -27,7 +27,7 @@ Built on the same modern stack as the client-facing web app to ensure consistenc
 ## 📂 Project Structure
 
 ```
-escapemaster-admin/
+manager/panel-admin/
 ├── app/
 │   ├── (auth)/           # Admin Login
 │   ├── dashboard/        # Main Admin Interface
@@ -62,8 +62,8 @@ escapemaster-admin/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/diegogzt/escapemaster-admin.git
-   cd escapemaster-admin
+   git clone https://github.com/diegogzt/manager-panel-admin.git
+   cd manager-panel-admin
    ```
 
 2. **Install dependencies:**
