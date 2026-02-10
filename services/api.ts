@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://manager.escapemaster.es/api";
-console.log("🚀 ~ API_URL configured as:", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
@@ -23,7 +22,7 @@ api.interceptors.request.use(
 );
 
 export const admin = {
-  login: async (data: any) => {
+  login: async (data: { email: string; password: string }) => {
     const response = await api.post("/admin/login", data);
     return response.data;
   },
@@ -35,7 +34,7 @@ export const admin = {
     const response = await api.get("/admin/organizations");
     return response.data;
   },
-  createOrganization: async (data: any) => {
+  createOrganization: async (data: Record<string, unknown>) => {
     const response = await api.post("/admin/organizations", data);
     return response.data;
   },
@@ -43,7 +42,7 @@ export const admin = {
     const response = await api.get(`/admin/organizations/${orgId}/users`);
     return response.data;
   },
-  createUserInOrg: async (orgId: string, data: any) => {
+  createUserInOrg: async (orgId: string, data: Record<string, unknown>) => {
     const response = await api.post(`/admin/organizations/${orgId}/users`, data);
     return response.data;
   },
@@ -81,11 +80,11 @@ export const admin = {
     const response = await api.get(`/rooms/${id}`);
     return response.data;
   },
-  createRoom: async (data: any) => {
+  createRoom: async (data: Record<string, unknown>) => {
     const response = await api.post("/rooms", data);
     return response.data;
   },
-  updateRoom: async (id: string, data: any) => {
+  updateRoom: async (id: string, data: Record<string, unknown>) => {
     const response = await api.put(`/rooms/${id}`, data);
     return response.data;
   },

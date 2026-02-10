@@ -19,8 +19,8 @@ export default function EMAdminLoginPage() {
     setError("");
 
     const formData = new FormData(e.target as HTMLFormElement);
-    const email = formData.get("email");
-    const password = formData.get("password");
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
     try {
       const data = await admin.login({ email, password });
