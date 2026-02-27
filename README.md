@@ -19,6 +19,7 @@ Escapemaster Admin is the internal administration tool used by platform owners t
 Built on the same modern stack as the client-facing web app to ensure consistency and code sharing.
 
 ### Core Stack
+
 - **Framework:** Next.js 16 (App Router)
 - **Styling:** Tailwind CSS v4
 - **Icons:** Lucide React
@@ -43,11 +44,13 @@ manager/panel-admin/
 ## 🚀 Development Phases & Roadmap
 
 ### ✅ Phase 1: Foundation (Completed)
+
 - [x] Project setup with Next.js 16 & Tailwind v4.
 - [x] Basic App Shell (Sidebar, Header).
 - [x] Authentication flow (Admin Guard).
 
 ### 🚧 Phase 2: Management Features (In Progress)
+
 - [x] **Full Rebranding:** Migrated all components and branding to Escapemaster.
 - [x] **Testing Infrastructure:** Integrated Vitest for unit and integration testing.
 - [ ] **Organization CRUD:** Interface to create, edit, and suspend tenant organizations.
@@ -55,24 +58,28 @@ manager/panel-admin/
 - [ ] **Template Builder:** Interface to construct default dashboard layouts.
 
 ### 🔮 Phase 3: Analytics & Billing (Planned)
+
 - [ ] **Platform Analytics:** Global metrics (Total MRR, Active Users).
 - [ ] **Billing Management:** Stripe subscription oversight.
 
 ## 🛠️ Setup & Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/diegogzt/manager-panel-admin.git
    cd manager-panel-admin
    ```
 
 2. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 3. **Configure Environment:**
    Create `.env.local` and add:
+
    ```env
    NEXT_PUBLIC_API_URL=http://localhost:8000
    ```

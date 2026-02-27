@@ -58,6 +58,12 @@ export function Sidebar() {
             <span>Roles</span>
           </div>
         </Link>
+        <Link href="/subscriptions">
+          <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${isActive("/subscriptions") ? "bg-[#2A7A6B]" : "hover:bg-[#2A7A6B]/50"}`}>
+            <Wallet size={20} />
+            <span>Suscripciones</span>
+          </div>
+        </Link>
 
         <div className="pt-4 mt-4 border-t border-[#2A7A6B]/50">
           <p className="px-4 text-xs text-white/50 uppercase tracking-wider mb-2">Onboarding B2B</p>
